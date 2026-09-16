@@ -11,7 +11,154 @@
     "title": "Add your first published project",
     "type": "Case Study",
     "year": "New",
-    "description": "Replace this card with a case study, BRD, analysis, requirement document, presentation or other portfolio artefact.",
+    "description": "Business Requirement Document (BRD)
+________________________________________1. Document Control & Overview
+1.1 Project Title
+Murex XVA (CVA & FVA) Pricing, Provisioning, and Risk Management Framework
+1.2 Business Objective
+The primary business objective is to implement a robust, enterprise-wide valuation adjustment framework within Murex (MX.3). The platform must support two core operational workflows:
+1.	Real-Time Pre-Deal Incremental Pricing: Allow Front Office trading desks to calculate incremental counterparty credit and funding risk charges on new transactions or market operations prior to deal execution.
+2.	End-of-Day Provisioning & Monitoring: Provide an immutable batch calculation engine for the PCVA desk, Finance (Product Control), and Risk Oversight to track daily XVA provisions, analyze risk sensitivities, calculate regulatory capital, and execute market hedges.
+________________________________________2. Business Scope & Valuation Adjustments
+2.1 In-Scope Valuation Adjustments
+The system must calculate and report the following specific valuation adjustments:
+●	Credit Valuation Adjustment (CVA): Measures counterparty credit risk by adjusting derivative transaction prices based on the potential loss if a counterparty defaults.
+●	Funding Valuation Adjustment (FVA): Accounts for uncollateralized exposure funding costs and benefits, split strictly into:
+○	Funding Cost Adjustment (FCA): Incurred when a positive Mark-to-Market (MTM) trade with an uncollateralized counterparty is hedged in the collateralized interbank market, requiring collateral to be funded.
+○	Funding Benefit Adjustment (FBA): Incurred when a negative MTM with an uncollateralized counterparty yields collateral from the interbank market hedge without posting collateral back.
+2.2 Out-of-Scope Valuation Adjustments
+The following adjustments are explicitly excluded from calculation within the current platform scope:
+●	Debit Valuation Adjustment (DVA)
+●	Collateral Valuation Adjustment (ColVA)
+●	Capital Valuation Adjustment (KVA)
+●	Margin Valuation Adjustment (MVA)
+________________________________________3. Stakeholders & User Roles
+Stakeholder Group	Role & Primary Business Responsibilities
+Front Office Trading Desks
+
+(Rates, FX & FX Options, Commodities, Credit)	• Execute real-time pre-deal checks in the Trade Pad before booking.
+
+• Evaluate incremental XVA risk charges.
+
+• Pass XVA costs to clients via trade margins/spreads where applicable.
+PCVA Desk
+
+(Pricing, Capital Valuations & Adjustments)	• Manage bank-wide XVA risk and receive trade-level XVA broker flows.
+
+• Monitor EOD book-level CVA/FVA provisions and sensitivities.
+
+• Execute market hedges using Credit Default Swaps (CDS) and ITRAXX indices.
+Product Control Valuations
+
+(Finance)	• Validate daily End-of-Day CVA/FVA provision figures.
+
+• Perform multi-iteration P&L Explain reporting to isolate day-over-day risk factor impacts.
+Risk Oversight	• Track and monitor bank-wide XVA risk sensitivities.
+Downstream Risk & Capital Teams	• Rex (Risk Explorer): Consumes market risk sensitivities.
+
+• GTRS: Consumes exposure data for regulatory capital calculations.
+________________________________________4. Product & Portfolio Eligibility Rules
+The system must determine deal eligibility based on strict multi-layered criteria:
+                       +-----------------------------------+
+                       |    Incoming Trade Candidate       |
+                       +-----------------------------------+
+                                         |
+                                         v
+               +--------------------------------------------------+
+               |  Is Typology In-Scope for XVA?                   |
+               |  - IN: IRS, FX Forwards, FX Options, Commodities  |
+               |  - OUT: FX Spot, Fixed Income (Bonds)            |
+               +--------------------------------------------------+
+                                  |            |
+                                 YES           NO ---> [ Exclude ]
+                                  |
+                                  v
+               +--------------------------------------------------+
+               |  Is Portfolio Flagged as "XVA Eligible = Y"?      |
+               |  - Checked via Murex UDS synced to MLC           |
+               +--------------------------------------------------+
+                                  |            |
+                                 YES           NO ---> [ Exclude ]
+                                  |
+                                  v
+               +--------------------------------------------------+
+               |  Is Counterparty Flagged as XVA Eligible?         |
+               +--------------------------------------------------+
+                                  |            |
+                                 YES           NO ---> [ Exclude ]
+                                  |
+                                  v
+               +--------------------------------------------------+
+               |    Include Trade in XVA Calculation Scope        |
+               +--------------------------------------------------+
+4.1 Eligibility Criteria Summary
+●	Product Typology Scope:
+○	Eligible: Interest Rate Swaps (IRS), FX Forwards, FX Options, and Commodity derivatives.
+○	Ineligible: Short-settlement trades (FX Spot) and Fixed Income cash instruments (Bonds).
+●	Portfolio & Counterparty Rules: Portfolios (including Wall Street feed source portfolios) and counterparties must be explicitly flagged with XVA Eligibility = True.
+●	P&L Acceptance Filter (EOD vs. Live Engine):
+○	EOD Viewer: Restricted exclusively to P&L Accepted deals.
+○	Live Engine (RTLIM): Evaluates all active, existing deals in the system regardless of P&L acceptance state to capture full active market risk.
+________________________________________5. Functional Requirements
+5.1 Real-Time Live Engine (RTLIM) Workflow
+●	Start-of-Day Baseline Build: The live engine (RTLIM) must generate every morning (target completion between 05:00 AM and 07:00 AM) using updated market data to establish current portfolio risk baselines.
+●	Pre-Deal Check Functionality: Traders must be able to execute a pre-deal check from the Trade Pad.
+●	Incremental Risk Calculation: The engine must evaluate the candidate deal against current portfolio risks and output isolated incremental CVA and FVA charges.
+●	Broker Flow Generation: Incremental risk charges must attach automatically as broker flows payable to the PCVA desk. Opposite-direction trades that reduce overall portfolio risk must output negative values (risk releases).
+5.2 End-of-Day Viewer (CVA Viewer) Workflow
+●	Static Aggregate Calculations: Compute daily EOD XVA provisions using a fixed snapshot of the Sydney Closing CSA market dataset.
+●	Immutability: EOD viewer figures must remain static once calculated to preserve official end-of-day audit trails.
+●	Multi-View Dashboards: Results must display through structured dashboard views, enabling users to drill down from parent-level counterparties to trade-level attributions and risk factor sensitivities.
+5.3 Technical Calculation Methodology & Input Rules
+●	Monte Carlo Simulation: Exposure calculation must use Monte Carlo simulations diffusing market risk factors across 8,190 scenario paths over a 40-year horizon.
+●	Discretized Time Bucketing: Simulations must evaluate exposures across ~200 discrete future maturity buckets (compact daily steps for days 1–14, transitioning to weekly, monthly, quarterly, and yearly intervals).
+●	Positive Exposure Grid: CVA calculations must evaluate strictly positive MTM values ($Max(MTM, 0)$).
+●	Credit Parameters: Probability of Default (PD) must draw from specific counterparty credit curves or generic sector/region/rating curves. Loss Given Default (LGD) must default to 40% (60% recovery rate).
+●	Rate & FX Diffusion Process:
+○	Rate processes across currencies must use the Single-Factor Hull-White (1F) model.
+○	All FX risk factor diffusions must be processed against USD as the primary diffusion and funding currency.
+○	Output reporting currency must be set to Australian Dollars (AUD).
+●	Segregated Variation Margin (VM) Special Handling: For counterparties holding Segregated VM CSAs, the engine must force the Funding Benefit Adjustment (FBA) parameter to zero due to legal collateral re-hypothecation restrictions.
+________________________________________6. Enterprise Integration & Data Flow
++-----------------------------------------------------------------------------------+
+|                                  DATA SOURCES                                     |
+|  - Market Data: Sydney Closing CSA Dataset                                        |
+|  - Trade Feeds: Murex Front Office & Wall Street Real-Time Trades                 |
+|  - Legal/Static: SAP BP Counterparty Hierarchy & GMD Netting/Collateral Agreements|
++----------------------------------------+------------------------------------------+
+                                         |
+                                         v
++-----------------------------------------------------------------------------------+
+|                           MUREX LIMITS CONTROLLER (MLC)                           |
+|  - LTS XML Scripts sync portfolio flags & typology eligibility tables             |
+|  - Evaluates Netting Agreements & Collateral CSAs (Thresholds / MTAs)             |
+|  - Runs Hull-White 1F Monte Carlo Diffusions (USD Funding / AUD Base)             |
++----------------------------------------+------------------------------------------+
+                                         |
+                   +---------------------+---------------------+
+                   |                                           |
+                   v                                           v
++------------------------------------+     +----------------------------------------+
+| REAL-TIME ENGINE (RTLIM)        |     | END-OF-DAY VIEWER (CVA VIEWER)         |
+| - Model Template: RTLIM         |     | - Model Template: PRODUCTION           |
+| - Database Table: XVA_MV_RTM_REP   |     | - Database Table: XVA_MV_REP           |
+| - Feeder Script: XVA_MV_RTM_BF     |     | - Feeder Script: XVA_MV_EOD_BF         |
+| - Trade Scope: All Active Trades   |     | - Trade Scope: P&L Accepted Trades     |
++------------------+-----------------+     +-------------------+--------------------+
+                   |                                           |
+                   v                                           v
++------------------------------------+     +----------------------------------------+
+| FRONT OFFICE TRADE PAD             |     | DOWNSTREAM CONSUMERS                   |
+| - Pre-Deal Checks                  |     | - PCVA Desk (Provisions & CDS Hedging) |
+| - Broker Flow Pricing Adjustments  |     | - Product Control (P&L Explain)        |
+|                                    |     | - Rex (Market Risk Sensitivities)      |
+|                                    |     | - GTRS (Regulatory Capital)            |
++------------------------------------+     +----------------------------------------+
+6.1 Downstream Systems Integration
+1.	Product Control Valuations Data Mart: Consumes multi-run iterations to generate daily P&L Explain reports.
+2.	Risk Explorer (Rex): Receives XVA market risk sensitivities for consolidated risk management.
+3.	GTRS System: Receives exposure and sensitivity outputs for calculating enterprise regulatory capital requirements.
+",
     "tags": ["Your work", "Portfolio"],
     "file": "assets/projects/README.md"
   }
