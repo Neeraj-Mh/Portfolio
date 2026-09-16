@@ -1,11 +1,11 @@
 [
   {
-    "title": "How I structure a business requirements document",
+    "title": "Murex XVA (CVA & FVA) Pricing, Provisioning,and Risk Management Framework",
     "type": "BRD",
     "year": "Template",
     "description": "A practical starting point for documenting business needs, scope, requirements, risks and delivery decisions.",
     "tags": ["Product discovery", "Requirements"],
-    "file": "assets/projects/business-requirements-document-template.md"
+    "file": "assets/projects/xva_cva_implementation.pdf"
   },
   {
     "title": "Add your first published project",
