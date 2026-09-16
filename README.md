@@ -14,6 +14,6 @@ For a personal GitHub Pages address, name the repository `YOUR-USERNAME.github.i
 
 ## Update the work library
 
-Add your documents to `assets/projects`, then add an entry to `projects.json`. Use one of these types: `PRD`, `Analysis`, `Requirements`, or `Case Study`. The filter buttons will work automatically.
+Add your documents to `assets/projects`, then add an entry to `projects.json`. Use one of these types: `BRD`, `Analysis`, `Requirements`, or `Case Study`.
 
 Do not upload confidential client materials. Publish anonymised, approved extracts or a high-level case study instead.

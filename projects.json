@@ -1,11 +1,11 @@
 [
   {
-    "title": "How I structure a product requirements document",
-    "type": "PRD",
+    "title": "How I structure a business requirements document",
+    "type": "BRD",
     "year": "Template",
-    "description": "A practical starting point for defining a problem, success measures, scope, requirements, risks and delivery decisions.",
+    "description": "A practical starting point for documenting business needs, scope, requirements, risks and delivery decisions.",
     "tags": ["Product discovery", "Requirements"],
-    "file": "assets/projects/product-requirements-document-template.md"
+    "file": "assets/projects/business-requirements-document-template.md"
   },
   {
     "title": "Add your first published project",
