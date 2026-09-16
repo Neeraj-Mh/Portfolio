@@ -3,8 +3,7 @@
     "title": "Murex XVA (CVA & FVA) Pricing, Provisioning,and Risk Management Framework",
     "type": "BRD",
     "year": "Template",
-    "description": "The primary business objective is to implement a robust, enterprise-wide valuation
-adjustment framework within Murex (MX.3), to accurately calculate and manage Credit Valuation Adjustment (CVA) and Funding Valuation Adjustment (FVA) for derivative portfolios. This framework will enable the organization to assess counterparty credit risk, optimize funding costs, and enhance overall risk management practices.",
+    "description": "A practical starting point for documenting business needs, scope, requirements, risks and delivery decisions.",
     "tags": ["Product discovery", "Requirements"],
     "file": "assets/projects/xva_cva_implementation.pdf"
   },
