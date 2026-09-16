@@ -1,0 +1,18 @@
+[
+  {
+    "title": "How I structure a product requirements document",
+    "type": "PRD",
+    "year": "Template",
+    "description": "A practical starting point for defining a problem, success measures, scope, requirements, risks and delivery decisions.",
+    "tags": ["Product discovery", "Requirements"],
+    "file": "assets/projects/product-requirements-document-template.md"
+  },
+  {
+    "title": "Add your first published project",
+    "type": "Case Study",
+    "year": "New",
+    "description": "Replace this card with a case study, BRD, analysis, requirement document, presentation or other portfolio artefact.",
+    "tags": ["Your work", "Portfolio"],
+    "file": "assets/projects/README.md"
+  }
+]
