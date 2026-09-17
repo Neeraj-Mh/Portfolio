@@ -16,12 +16,23 @@
     "tags": ["Product discovery", "Requirements"],
     "file": "assets/projects/OSP_queue.pdf"
   },
+
+   {
+    "title": "Murex Real-Time & End-of-Day XVA Integration Platform",
+    "type": "BRD",
+    "year": "Template",
+    "description": "Implement a end-to-end Murex XVA solution covering live pre-trade pricing, batch reporting,automated static data pipelines,Real-Time Pre-Trade Pricing, End-of-Day Aggregations (CVA Viewer), Upstream Feeds Ingestion, and Murex Configuration Modules.",
+    "tags": ["Product discovery", "Requirements"],
+    "file": "assets/projects/Real-time xva integration.pdf"
+  },
+
   {
     "title": "Add your first published project",
     "type": "Case Study",
     "year": "New",
-    "description": "Replace this card with a case study, BRD, analysis, requirement document, presentation or other portfolio artefact.",
+    "description": " Coming Soon",
     "tags": ["Your work", "Portfolio"],
     "file": "assets/projects/README.md"
   }
+  
 ]
