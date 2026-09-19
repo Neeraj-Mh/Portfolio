@@ -1,6 +1,6 @@
 [
   {
-    "title": "Murex XVA (CVA & FVA) Pricing, Provisioning,and Risk Management Framework",
+    "title": "Murex XVA (CVA & FVA) Pricing, Provisioning, and Risk Management Framework",
     "type": "BRD",
     "year": "Template",
     "description": "The primary business objective is to implement a robust, enterprise-wide valuation adjustment framework within Murex (MX.3) to accurately price, provision, and manage counterparty credit risk (CVA) and funding costs (FVA) associated with derivative portfolios. This framework will enable the organization to enhance risk management practices, optimize capital allocation, and ensure compliance with regulatory requirements.",
@@ -12,27 +12,27 @@
     "title": "Centralized Exception Handling via One Stop Processing (OSP)",
     "type": "BRD",
     "year": "Template",
-    "description": "Implement One Stop Processing (OSP)—a single, easy-to-use central dashboard.OSP brings all stuck transactions together in one place, allowing users to quickly identify and resolve issues. This will improve operational efficiency, reduce processing time, and enhance the overall user experience.",
+    "description": "Implement One Stop Processing (OSP)—a single, easy-to-use central dashboard. OSP brings all stuck transactions together in one place, allowing users to quickly identify and resolve issues. This will improve operational efficiency, reduce processing time, and enhance the overall user experience.",
     "tags": ["Product discovery", "Requirements"],
     "file": "assets/projects/OSP_queue.pdf"
   },
 
-   {
+  {
     "title": "Murex Real-Time & End-of-Day XVA Integration Platform",
     "type": "BRD",
     "year": "Template",
-    "description": "Implement a end-to-end Murex XVA solution covering live pre-trade pricing, batch reporting,automated static data pipelines,Real-Time Pre-Trade Pricing, End-of-Day Aggregations (CVA Viewer), Upstream Feeds Ingestion, and Murex Configuration Modules.",
+    "description": "Implement an end-to-end Murex XVA solution covering live pre-trade pricing, batch reporting, automated static data pipelines, Real-Time Pre-Trade Pricing, End-of-Day Aggregations (CVA Viewer), Upstream Feeds Ingestion, and Murex Configuration Modules.",
     "tags": ["Product discovery", "Requirements"],
     "file": "assets/projects/Real-time xva integration.pdf"
   },
 
   {
-    "title": "Add your first published project",
-    "type": "Case Study",
+    "title": "Multi-Agent AI Recruitment System: Resume Parsing, Scoring & Auto-Scheduling",
+    "type": "Agentic AI System",
     "year": "New",
-    "description": " Coming Soon",
+    "description": "I built an end-to-end Multi-Agent AI Recruitment System that automates the entire pipeline:\n📄 Parses & Extracts: Ingests PDF resumes and extracts candidate data instantly.\n🎯 LLM Scoring: Evaluates profiles against job benchmarks (0–100 match score).\n📅 Auto-Scheduling: Qualified applicants automatically receive interview invites with dynamic Zoom links (Teams coming soon!).\n✉️ Zero Ghosting: Non-matching candidates receive constructive, actionable feedback instead of a black-hole rejection.\nBuilt with Python, Streamlit, and LLMs to run completely hands-free. Check demo here - https://youtu.be/C4OFvdY4lDU?si=G-7epTuuVQ7-uCbg",
     "tags": ["Your work", "Portfolio"],
     "file": "assets/projects/README.md"
   }
-  
+
 ]
