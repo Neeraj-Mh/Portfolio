@@ -1,8 +1,13 @@
-# Adding portfolio work
+I built an end-to-end Multi-Agent AI Recruitment System that automates the entire pipeline:
 
-<!-- 1. Put your file in this `assets/projects` folder. GitHub Pages can link directly to PDF, Word, PowerPoint, image and Markdown files.
-2. Add a card in `projects.json` using the same format as the existing entries.
-3. Set `file` to the relative path, for example `assets/projects/my-murex-case-study.pdf`.
-4. Commit and push the changes. GitHub Pages will publish the update.
+Parses & Extracts: Ingests PDF resumes and extracts candidate data instantly.
 
-Keep confidential client information, internal systems and personally identifiable data out of public files. Use anonymised excerpts or a summary where needed. -->
+LLM Scoring: Evaluates profiles against job benchmarks (0–100 match score).
+
+Auto-Scheduling: Qualified applicants automatically receive interview invites with dynamic Zoom links (Teams coming soon!).
+
+Zero Ghosting: Non-matching candidates receive constructive, actionable feedback instead of a black-hole rejection.
+
+Built with Python, Streamlit, and LLMs to run completely hands-free.
+
+Watch the full demo: https://youtu.be/C4OFvdY4lDU?si=PETMuG838HirS7dC

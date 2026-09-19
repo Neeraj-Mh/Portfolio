@@ -30,7 +30,7 @@
     "title": "Multi-Agent AI Recruitment System: Resume Parsing, Scoring & Auto-Scheduling",
     "type": "Agentic AI System",
     "year": "New",
-    "description": "I built an end-to-end Multi-Agent AI Recruitment System that automates the entire pipeline:\n📄 Parses & Extracts: Ingests PDF resumes and extracts candidate data instantly.\n🎯 LLM Scoring: Evaluates profiles against job benchmarks (0–100 match score).\n📅 Auto-Scheduling: Qualified applicants automatically receive interview invites with dynamic Zoom links (Teams coming soon!).\n✉️ Zero Ghosting: Non-matching candidates receive constructive, actionable feedback instead of a black-hole rejection.\nBuilt with Python, Streamlit, and LLMs to run completely hands-free. Check demo here - https://youtu.be/C4OFvdY4lDU?si=G-7epTuuVQ7-uCbg",
+    "description": "I built an end-to-end Multi-Agent AI Recruitment System that automates the entire pipeline:\n📄 Parses & Extracts: Ingests PDF resumes and extracts candidate data instantly.\n🎯 LLM Scoring: Evaluates profiles against job benchmarks (0–100 match score).\n📅 Auto-Scheduling: Qualified applicants automatically receive interview invites with dynamic Zoom links.\n✉️ Zero Ghosting: Non-matching candidates receive constructive, actionable feedback instead of a black-hole rejection",
     "tags": ["Your work", "Portfolio"],
     "file": "assets/projects/README.md"
   }
