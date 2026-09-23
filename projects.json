@@ -25,6 +25,13 @@
     "tags": ["Product discovery", "Requirements"],
     "file": "assets/projects/Real-time xva integration.pdf"
   },
+ {
+    "title": "Murex Integration with MarkitWire Trade Affirmation & STP Platform",
+    "type": "BRD",
+    "year": "Template",
+    "description": "This document specifies the business and technical requirements for integrating Murex with the MarkitWire trade affirmation platform. The integration enables automated Straight-Through Processing (STP), pre-trade affirmation, Central Counterparty (CCP) clearing routing (LCH/CME), rate transition handling, and message replay capabilities for non-connected test environments.",
+    "file": "assets/projects/Murex Marketwire (1).pdf"
+  },
 
   {
     "title": "Multi-Agent AI Recruitment System: Resume Parsing, Scoring & Auto-Scheduling",
