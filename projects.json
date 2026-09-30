@@ -40,6 +40,15 @@
     "description": "I built an end-to-end Multi-Agent AI Recruitment System that automates the entire pipeline:\n📄 Parses & Extracts: Ingests PDF resumes and extracts candidate data instantly.\n🎯 LLM Scoring: Evaluates profiles against job benchmarks (0–100 match score).\n📅 Auto-Scheduling: Qualified applicants automatically receive interview invites with dynamic Zoom links.\n✉️ Zero Ghosting: Non-matching candidates receive constructive, actionable feedback instead of a black-hole rejection",
     "tags": ["Your work", "Portfolio"],
     "file": "https://youtu.be/C4OFvdY4lDU"
+  },
+  
+  {
+    "title": "Trade_settlement_exception_resolver_agent",
+    "type": "Agentic AI System",
+    "year": "New",
+    "description": "The T+1 Settlement Exception Resolver helps operations users investigate settlement failures caused by outdated or unregistered settlement instructions (SSI). It finds relevant instructions in communications, extracts proposed routing details, presents the evidence and confidence to an operator, and prepares a controlled amendment for approval",
+    "tags": ["Your work", "Portfolio"],
+    "file": "https://youtu.be/hkYm-DU7Suw"
   }
 
 ]
