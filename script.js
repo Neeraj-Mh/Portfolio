@@ -5,7 +5,7 @@ const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&a
 
 const isVideo = file => /youtu\.?be|vimeo/.test(file);
 
-const card = project => `<a class="document" href="${encodeURI(project.file)}" target="_blank" rel="noreferrer">
+const card = project => `<a class="document${/ai/i.test(project.type) ? '' : ' document-compact'}" href="${encodeURI(project.file)}" target="_blank" rel="noreferrer">
   <small>${escape(project.type)}</small>
   <strong>${escape(project.title.replace(/_/g, ' '))}</strong>
   <span>${escape(project.description)}</span>

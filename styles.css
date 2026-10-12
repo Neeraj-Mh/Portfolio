@@ -152,3 +152,6 @@ footer small { color: #93a8a3; }
   html { scroll-behavior: auto; }
   .button, .document { transition: none; }
 }
+
+/* Requirement documents show a one-line preview */
+.document-compact span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
