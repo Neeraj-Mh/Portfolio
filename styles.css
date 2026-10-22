@@ -79,12 +79,18 @@ main section.stats { border-bottom: 1px solid var(--line); }
 .prose p { margin: 0; color: var(--muted); font-size: 1.02rem; }
 
 /* Impact */
-.impact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .impact-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 28px; display: flex; flex-direction: column; }
 .impact-card h3 { font-size: 1.2rem; }
 .impact-card p { margin: 0; color: var(--muted); font-size: .94rem; }
 .impact-card .card-tag { color: var(--accent); }
 .impact-card .metric { margin-top: auto; padding-top: 18px; color: var(--accent); font-weight: 700; font-size: .95rem; }
+
+/* Approach */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; counter-reset: step; }
+.steps li { counter-increment: step; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px; }
+.steps li::before { content: counter(step, decimal-leading-zero); display: block; font-family: var(--serif); font-size: 1.6rem; color: var(--accent); margin-bottom: 10px; }
+.steps p { margin: 0; font-size: .88rem; color: var(--muted); }
 
 /* Domains */
 .domain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 32px; }
@@ -129,6 +135,7 @@ footer a:hover { text-decoration: underline; }
 footer small { color: #93a8a3; }
 
 @media (max-width: 900px) {
+  .impact-grid, .steps { grid-template-columns: 1fr 1fr; }
   .domain-grid, .edu-grid { grid-template-columns: 1fr 1fr; }
   .stats { grid-template-columns: 1fr 1fr; }
   .stats div:nth-child(3) { border-left: 0; }
@@ -142,7 +149,7 @@ footer small { color: #93a8a3; }
   .hero { grid-template-columns: 1fr; gap: 36px; padding: 48px 0; }
   .portrait-wrap { max-width: 320px; }
   main section { padding: 60px 0; }
-  .prose, .impact-grid, .domain-grid, .card-list, .edu-grid { grid-template-columns: 1fr; }
+  .prose, .impact-grid, .steps, .domain-grid, .card-list, .edu-grid { grid-template-columns: 1fr; }
   .job { grid-template-columns: 1fr; gap: 6px; }
   .stats span { font-size: .8rem; }
   .stats strong { font-size: 1.9rem; }
@@ -154,4 +161,5 @@ footer small { color: #93a8a3; }
 }
 
 /* Requirement documents show a one-line preview */
+.document-compact { min-width: 0; }
 .document-compact span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
