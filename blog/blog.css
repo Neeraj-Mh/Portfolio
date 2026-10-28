@@ -1,0 +1,34 @@
+/* Blog styles — builds on ../styles.css tokens */
+.post, .blog-index { max-width: 720px; margin: 0 auto; padding: 72px 0 96px; }
+.post-meta { color: var(--muted); font-size: .88rem; margin: 0 0 8px; }
+.post h1, .blog-index h1 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height: 1.05; margin: 0 0 20px; }
+.post .lead { margin: 0 0 40px; }
+.post h2 { font-size: clamp(1.5rem, 2.8vw, 1.9rem); margin: 56px 0 16px; }
+.post h3 { font-size: 1.12rem; margin: 32px 0 10px; }
+.post p, .post li { font-size: 1.04rem; line-height: 1.75; }
+.post ul { padding-left: 20px; }
+.post li { margin-bottom: 8px; }
+.post li::marker { color: var(--accent); }
+.post code { font-size: .92em; background: var(--surface-alt); padding: 2px 6px; border-radius: 6px; }
+.callout { background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 18px 22px; margin: 28px 0; }
+.callout p { margin: 0; }
+.stage { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.compare { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: .93rem; }
+.compare th, .compare td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.compare th { font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.table-wrap { overflow-x: auto; }
+figure { margin: 32px 0; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { text-align: center; font-size: .85rem; color: var(--muted); margin-top: 10px; }
+.fc-box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.fc-q { fill: var(--surface-alt); stroke: var(--accent); stroke-width: 1.5; }
+.fc-go { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.fc-text { fill: var(--ink); font: 600 13px var(--sans); }
+.fc-small { fill: var(--muted); font: 600 11px var(--sans); letter-spacing: .06em; }
+.fc-line { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.fc-arrow { fill: var(--muted); }
+.back { display: inline-block; margin-top: 48px; font-weight: 600; text-decoration: none; color: var(--accent); }
+.post-list { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 16px; }
+@media (max-width: 700px) {
+  .post, .blog-index { padding: 40px 0 64px; }
+}

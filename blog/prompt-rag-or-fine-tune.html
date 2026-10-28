@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical decision framework for customising LLMs: start with prompt engineering, move to RAG when the model lacks knowledge, and fine-tune only when it lacks a skill or behaviour.">
+  <meta property="og:title" content="Prompt, RAG or Fine-Tune? A Product Manager’s Decision Framework">
+  <meta property="og:description" content="Start cheap, escalate on evidence: how to choose between prompting, retrieval-augmented generation and fine-tuning.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#0f2a2e">
+  <title>Prompt, RAG or Fine-Tune? | Neeraj Maheshwari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="name" href="../index.html">Neeraj Maheshwari</a>
+    <nav aria-label="Main">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#impact">AI impact</a>
+      <a href="index.html">Blog</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="https://github.com/Neeraj-Mh" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="post">
+    <p class="label">LLM product strategy</p>
+    <h1>Prompt, RAG or fine-tune? A decision framework for LLM products</h1>
+    <p class="post-meta">Neeraj Maheshwari · 28 October 2026 · 7 min read</p>
+    <p class="lead">Every team building on large language models eventually hits the same fork in the road: do we write a better prompt, wire up retrieval, or train the model? Picking the wrong branch burns weeks and budget. Here is the simple rule I use: start with the cheapest tool and escalate only when you have evidence it isn’t enough.</p>
+
+    <h2>Think of it as a ladder, not a menu</h2>
+    <p>Prompting, retrieval-augmented generation (RAG) and fine-tuning are often presented as three equal options. They aren’t. They sit on a ladder of rising cost, effort and maintenance burden. Each rung is worth climbing only after the one below has demonstrably failed against your quality bar.</p>
+    <div class="table-wrap">
+      <table class="compare">
+        <thead><tr><th>Approach</th><th>What it fixes</th><th>Cost &amp; effort</th><th>Time to first result</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Prompt engineering</strong></td><td>Unclear instructions, tone, output format</td><td>Lowest</td><td>Hours</td></tr>
+          <tr><td><strong>RAG</strong></td><td>Missing, private or fresh knowledge</td><td>Medium: pipeline, index, retrieval quality</td><td>Days to weeks</td></tr>
+          <tr><td><strong>Fine-tuning</strong></td><td>Missing skill, style or consistent behaviour</td><td>Highest: data curation, training, evals</td><td>Weeks</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Rung 1: Prompt engineering</h2>
+    <span class="stage">Always start here</span>
+    <p>Before writing any retrieval code or labelling any training data, find out how far clear instructions can take you. Modern models already carry a lot of general capability; often they just need to be told exactly what you want. Prompting is the right tool for:</p>
+    <ul>
+      <li><strong>Persona and tone</strong>: “Respond as a mortgage operations analyst writing for a credit manager.”</li>
+      <li><strong>Strict output formats</strong>: “Return only valid JSON matching this schema.”</li>
+      <li><strong>Self-contained tasks</strong>: summarising, translating or classifying text that is already in the prompt.</li>
+    </ul>
+    <p>The question to ask: <em>could a smart generalist do this well if I briefed them properly?</em> If yes, invest in the brief. Few-shot examples, where you show the model two or three worked input–output pairs, are surprisingly powerful and frequently close the gap on their own.</p>
+    <p>Move up a rung only when you have evidence, not a hunch. That evidence usually looks like one of two things:</p>
+    <ul>
+      <li><strong>Stubborn unreliability</strong>: even with good examples, a meaningful share of outputs still break the format or ignore instructions.</li>
+      <li><strong>A knowledge wall</strong>: the model plainly says, or confidently invents, things it cannot know, such as your internal policies or last quarter’s numbers.</li>
+    </ul>
+
+    <h2>Rung 2: Retrieval-augmented generation</h2>
+    <span class="stage">When the model doesn’t know enough</span>
+    <p>If the model is capable of the task but lacks the facts, give it the facts at query time. RAG retrieves relevant passages from your own sources and places them in the context window alongside the question. It shines for:</p>
+    <ul>
+      <li><strong>Private or proprietary content</strong>: policy manuals, product documents, customer-specific records.</li>
+      <li><strong>Information that changes</strong>: rates, procedures, news, anything newer than the model’s training cut-off.</li>
+      <li><strong>Grounding and traceability</strong>: answers that cite their sources, which matters enormously in regulated industries.</li>
+    </ul>
+    <p>The question to ask: <em>is the failure caused by the model not knowing something?</em> If so, RAG is almost always the right first move. It is cheaper than training, you can update knowledge by re-indexing a document instead of retraining a model, and it reduces hallucination by anchoring answers in real text.</p>
+    <div class="callout">
+      <p><strong>From practice:</strong> in banking, an assistant that answers credit-policy questions is a textbook RAG use case. Policies change, auditors want to see where an answer came from, and you never want a model “remembering” a superseded rule baked into its weights.</p>
+    </div>
+    <p>RAG has a ceiling too. You know you have hit it when retrieval is clearly working, meaning the right context is in front of the model, yet the output is still wrong. Imagine feeding it the exact clause from a complex legal agreement and getting back a summary that is too casual and misses the nuance a specialist would catch. That is no longer a knowledge problem. It is a skill problem.</p>
+
+    <h2>Rung 3: Fine-tuning</h2>
+    <span class="stage">When the model can’t do it well enough</span>
+    <p>Fine-tuning continues training a pre-trained model on a curated, task-specific dataset, adjusting its parameters so it behaves the way you need. It is the most powerful rung and the most expensive one, so reach for it only after prompting and RAG have been genuinely exhausted. It earns its place when you need:</p>
+    <ul>
+      <li><strong>A complex, consistent skill</strong>: a distinctive brand voice, a domain’s specialised vocabulary, or a multi-step reasoning pattern the model doesn’t follow reliably.</li>
+      <li><strong>Near-perfect reliability on a narrow task</strong>: extraction or classification that has to be right almost every single time.</li>
+      <li><strong>Efficiency</strong>: teaching a smaller, cheaper model to match a larger one on one specific job, cutting latency and serving costs.</li>
+    </ul>
+    <p>The question to ask: <em>does the model fail even when it has all the right information?</em> If yes, you are changing <em>behaviour</em>, not adding <em>knowledge</em>, and that is what fine-tuning is for. A common mistake is to fine-tune in order to teach facts. It is costly, the facts go stale, and RAG does that job better.</p>
+    <p>The good news is that fine-tuning is far more accessible than it used to be. Parameter-efficient fine-tuning (PEFT) methods such as LoRA (low-rank adaptation) train a small set of added weights, often under 1% of the model’s total, instead of retraining everything. That brings cost and hardware needs down to a level most teams can afford.</p>
+
+    <h2>The decision flow on one page</h2>
+    <figure>
+      <svg viewBox="0 0 640 490" role="img" aria-labelledby="fc-title">
+        <title id="fc-title">Flowchart: try prompting first; if the gap is knowledge, add RAG; if it is skill or behaviour, fine-tune; otherwise rethink whether an LLM fits.</title>
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="fc-arrow" d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="fc-box" x="70" y="10" width="240" height="44" rx="10"/>
+        <text class="fc-text" x="190" y="37" text-anchor="middle">New LLM use case</text>
+
+        <rect class="fc-q" x="20" y="90" width="340" height="56" rx="10"/>
+        <text class="fc-text" x="190" y="114" text-anchor="middle">Can a sharper prompt + few-shot</text>
+        <text class="fc-text" x="190" y="132" text-anchor="middle">examples meet the quality bar?</text>
+
+        <rect class="fc-go" x="400" y="90" width="220" height="56" rx="10"/>
+        <text class="fc-text" x="510" y="114" text-anchor="middle">Ship it</text>
+        <text class="fc-text" x="510" y="132" text-anchor="middle">then monitor &amp; refine</text>
+
+        <rect class="fc-q" x="20" y="200" width="340" height="56" rx="10"/>
+        <text class="fc-text" x="190" y="224" text-anchor="middle">Is the model missing knowledge</text>
+        <text class="fc-text" x="190" y="242" text-anchor="middle">(private, recent or specific facts)?</text>
+
+        <rect class="fc-go" x="400" y="200" width="220" height="56" rx="10"/>
+        <text class="fc-text" x="510" y="224" text-anchor="middle">Add RAG</text>
+        <text class="fc-text" x="510" y="242" text-anchor="middle">Did it close the gap?</text>
+
+        <rect class="fc-q" x="20" y="320" width="340" height="56" rx="10"/>
+        <text class="fc-text" x="190" y="344" text-anchor="middle">Is it a skill, style or</text>
+        <text class="fc-text" x="190" y="362" text-anchor="middle">behaviour gap?</text>
+
+        <rect class="fc-go" x="400" y="320" width="220" height="56" rx="10"/>
+        <text class="fc-text" x="510" y="344" text-anchor="middle">Fine-tune</text>
+        <text class="fc-text" x="510" y="362" text-anchor="middle">(PEFT / LoRA)</text>
+
+        <rect class="fc-box" x="20" y="420" width="340" height="56" rx="10"/>
+        <text class="fc-text" x="190" y="444" text-anchor="middle">Step back: reframe the problem.</text>
+        <text class="fc-text" x="190" y="462" text-anchor="middle">Is an LLM the right tool?</text>
+
+        <path class="fc-line" d="M190 54 V88" marker-end="url(#arr)"/>
+        <path class="fc-line" d="M360 118 H398" marker-end="url(#arr)"/><text class="fc-small" x="365" y="110">YES</text>
+        <path class="fc-line" d="M190 146 V198" marker-end="url(#arr)"/><text class="fc-small" x="198" y="178">NO</text>
+        <path class="fc-line" d="M360 228 H398" marker-end="url(#arr)"/><text class="fc-small" x="365" y="220">YES</text>
+        <path class="fc-line" d="M510 200 V148" marker-end="url(#arr)"/><text class="fc-small" x="518" y="180">YES</text>
+        <path class="fc-line" d="M510 256 V290 H190"/><text class="fc-small" x="518" y="280">NO</text>
+        <path class="fc-line" d="M190 256 V318" marker-end="url(#arr)"/><text class="fc-small" x="198" y="282">NO</text>
+        <path class="fc-line" d="M360 348 H398" marker-end="url(#arr)"/><text class="fc-small" x="365" y="340">YES</text>
+        <path class="fc-line" d="M190 376 V418" marker-end="url(#arr)"/><text class="fc-small" x="198" y="402">NO</text>
+      </svg>
+      <figcaption>Climb only as high as the evidence forces you to.</figcaption>
+    </figure>
+
+    <h2>What this means for product managers</h2>
+    <ul>
+      <li><strong>Define the quality bar first.</strong> “Good enough” has to be measurable, with an eval set and a target, or you can’t tell when a rung has failed.</li>
+      <li><strong>Diagnose before you build.</strong> Separate “doesn’t know” from “can’t do”. They lead to completely different solutions and budgets.</li>
+      <li><strong>The rungs combine.</strong> Production systems often use all three: a fine-tuned model, fed by RAG, steered by a carefully engineered prompt.</li>
+      <li><strong>Factor in maintenance, not just build cost.</strong> A prompt is edited in minutes and an index is refreshed in hours, but a fine-tuned model needs retraining, re-evaluation and governance every time things change.</li>
+    </ul>
+
+    <h2>The takeaway</h2>
+    <p>Treat LLM customisation as an escalation path: prompt first, retrieve when knowledge is missing, and fine-tune only when behaviour is. Teams that follow this order ship sooner, spend less, and end up with systems that are far easier to maintain and explain to risk, compliance and the business.</p>
+
+    <a class="back" href="index.html">← All posts</a>
+  </article>
+</main>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <h2>Let’s talk about putting AI to work in your bank or fintech.</h2>
+    <p><a href="mailto:neeraj.mh99@gmail.com">neeraj.mh99@gmail.com</a> · <a href="https://www.linkedin.com/in/neeraj-maheshwari-5aa76918" target="_blank" rel="noreferrer">LinkedIn</a> · <a href="https://github.com/Neeraj-Mh" target="_blank" rel="noreferrer">GitHub</a></p>
+    <small>Bangalore, India</small>
+  </div>
+</footer>
+</body>
+</html>
