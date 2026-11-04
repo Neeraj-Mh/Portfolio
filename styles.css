@@ -163,3 +163,6 @@ footer small { color: #93a8a3; }
 /* Requirement documents show a one-line preview */
 .document-compact { min-width: 0; }
 .document-compact span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.inline-link { color: var(--accent); font-weight: 600; text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }

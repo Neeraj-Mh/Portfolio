@@ -9,7 +9,7 @@ const card = project => `<a class="document${/ai/i.test(project.type) ? '' : ' d
   <small>${escape(project.type)}</small>
   <strong>${escape(project.title.replace(/_/g, ' '))}</strong>
   <span>${escape(project.description)}</span>
-  <em>${isVideo(project.file) ? 'Watch demo ↗' : 'Open document ↗'}</em>
+  <em>${isVideo(project.file) ? 'Watch demo ↗' : /github\.com/.test(project.file) ? 'View on GitHub ↗' : 'Open document ↗'}</em>
 </a>`;
 
 fetch('projects.json').then(response => response.json()).then(projects => {
