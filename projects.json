@@ -37,7 +37,7 @@
     "title": "AI Agent Lab",
     "type": "Agentic AI Lab",
     "year": "Ongoing",
-    "description": "One repository, a folder per agent: AI agents for banking, product management and business analysis use cases, each runnable on the Claude API or Gemini, built to prototype ideas quickly and demo them end to end.",
+    "description": "One repository, a folder per agent: AI agents for banking, capital markets, product and business analysis use cases, each runnable on the Claude API or Gemini.",
     "tags": ["Your work", "Portfolio"],
     "file": "https://github.com/Neeraj-Mh/ai-agent-lab"
   },
